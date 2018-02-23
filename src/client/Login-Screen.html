@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/styling.css" />
     <title> Creative Content</title>
+
+
+
   </head>
   <body>
     <header>
@@ -36,23 +39,45 @@
 
     <div id="main">
       <article id="login">
-        <form method="get" action="http://www.randyconnolly.com/tests/process.php">
+        <form name="loginInput" method="post" action="http://www.randyconnolly.com/tests/process.php" onsubmit="return passCheck()">
           <fieldset>
             <p>
               <label> Username: </label>
-              <input type="text" name="Username" placeholder="type Name here"/>
+              <input type="text" name="username" pattern="[a-zA-Z0-9!@#$%^*_|]{6-20}" placeholder="Username">
             </p>
             <p>
               <label> Password: </label>
-              <input type="password" name="password" placeholder="type Password here"/>
+              <input type="password" name="password" pattern="[a-zA-Z0-9!@#$%^*_|]{8-40}" placeholder="Password">
             </p>
             <p>
-              <input type="submit"/>
+              <input type="submit" value="Submit" >
             </p>
           </fieldset>
         </form>
       </article>
     </div>
+    <script>
+      function passCheck(){
+        var n = document.forms["loginInput"]["username"].value;
+        var p = document.forms["loginInput"]["password"].value;
+        var nums = /\d/;
+        if(n == "" || n.length < 6){
+          alert("Name must be six characters long.");
+          return false;
+        }
+        else if(p.length <8){
+          alert("Error:Password must be at least 8 characters long");
+          return false;
+        }
+        else if(nums.test(p) === false){
+          alert("Error: Password must have at least 1 number.")
+          return false;
+        }
+        else{
+          return submit;
+        }
+      }
+    </script>
     <footer>
       <p> @CreativeContent 2018 </p>
     </footer>
