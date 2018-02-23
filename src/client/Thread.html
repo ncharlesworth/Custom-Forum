@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/styling.css" />
+    <title> Creative Content</title>
+  </head>
+  <body>
+    <header>
+      <div id=topBar>
+        <a id=home href="home.html"><img src = "images/logo.png" alt="Home"></a></li>
+        <form id=search method="get" action="http://www.randyconnolly.com/tests/process.php">
+          <input type="text" name="Search"/>
+        </form>
+        <nav>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><p>Login</p></li>
+          </ul>
+        </nav>
+      </div>
+
+      <article id="loggedUser">
+        <div>
+          <figure>
+            <a href="user.html"><img src = "images/user.png" alt="Go to your User Page"></a>
+          </figure>
+        </div>
+        <div>
+          <a href="mail.html"><img src = "images/mail.png" alt="Go to your Mail"></a>
+        </div>
+      </article>
+    </header>
+
+
+    <div id="main">
+
+      <div class="thread">
+        <article class="post">
+          <table>
+            <tr>
+              <th colspan="2"> How to do Threads </th>
+            </tr>
+            <tr>
+              <td rowspan="3" class="userThread">
+                <p> <img class="userImage" src="images/user1.png" alt="user1 Image"></p>
+                <p> User Post Count </p>
+                <p> Date Joined </p>
+                <p> Message User </p>
+                <p> Edit Post (if current user or Admin) </p>
+                <p> Delete Post (if current user or Admin) </p>
+              </td>
+              <td class="postContent"> Donec velit velit, finibus et varius vitae, tempus sed lacus. Phasellus metus enim, sollicitudin vitae libero sit amet, faucibus fringilla dui. Etiam suscipit, arcu non volutpat molestie, neque tellus feugiat risus, et faucibus purus diam in turpis. Phasellus sed fringilla leo. Ut faucibus elit at dolor finibus pellentesque. Donec non massa sollicitudin, eleifend ipsum eu, convallis nisl. Etiam luctus bibendum tincidunt. Quisque lacinia congue urna, sit amet elementum massa pellentesque at. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas sagittis leo pulvinar, egestas tortor nec, cursus elit. Proin non odio elementum, pretium tortor quis, luctus arcu.</td>
+            </tr>
+            <tr>
+              <td class="Signature"> Hey! I just met you, and this is crazy, but like my post, or you're lazy. </td>
+            </tr>
+            <tr>
+              <td class="postDate"><p> Date Posted  </p> <p>Share this post! (Include actual links later) </p></td>
+            </tr>
+          </table>
+        </article>
+
+        <article class="post">
+          <table>
+            <tr>
+              <td rowspan='3' class="userInfo">
+                <p> User Image</p>
+                <p> User Post Count </p>
+                <p> Date Joined </p>
+                <p> Message User </p>
+                <p> Edit Post (if current user or Admin) </p>
+                <p> Delete Post (if current user or Admin) </p>
+              </td>
+              <td class="postContent">All of your text loots like Jiberish!</td>
+            </tr>
+            <tr>
+              <td class="Signature"> I have really creative content. Totally. Ask my Dad.</td>
+            </tr>
+            <tr>
+              <td class="postDate"><p> Date Posted  </p> <p>Share this post! (Include actual links later) </p></td>
+            </tr>
+          </table>
+        </article>
+
+        <article id="userPost">
+          <form method="post" action="http://www.randyconnolly.com/tests/process.php">
+              <p>
+                <input type="text" name="submitted-text"/>
+                <input type="submit"/>
+              </p>
+          </form>
+        </article>
+
+      </div>
+    </div>
+    <footer>
+      <p> @CreativeContent 2018 </p>
+    </footer>
+  </body>
+</html>

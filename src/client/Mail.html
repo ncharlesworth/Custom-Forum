@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/styling.css" />
+    <title> Creative Content</title>
+  </head>
+  <body>
+    <header>
+      <div id=topBar>
+        <a id=home href="home.html"><img src = "images/logo.png" alt="Home"></a></li>
+        <form id=search method="get" action="http://www.randyconnolly.com/tests/process.php">
+          <input type="text" name="Search"/>
+        </form>
+        <nav>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><p>Login</p></li>
+          </ul>
+        </nav>
+      </div>
+
+      <article id="loggedUser">
+        <div>
+          <figure>
+            <a href="user.html"><img src = "images/user.png" alt="Go to your User Page"></a>
+          </figure>
+        </div>
+        <div>
+          <a href="mail.html"><img src = "images/mail.png" alt="Go to your Mail"></a>
+        </div>
+      </article>
+    </header>
+    <div id="main">
+
+
+      <!--So, this should have a list of messages on the left side, maybe 1/5th of the overall screen
+      On the right side, this should have the content displayed as though it were a forum post
+
+      Mail needs to have a title on it, visible on the left and visible on the top of the threads
+
+      Also, needs to be lit up if not seen, and darkened if seen.
+
+      AND recent mail should bump up to the top of list. So it's in order of most recent posts.
+
+      ALSO submitted via post so you can't bookmark it or have people see it later from history
+
+      WHEN YOU CLICK MAIL, it sends a post request to the server that loads up in page? Might be a javascript thing then
+        WORST CASE, it loads a whole new page for that thread. Less efficient, but it'll do.
+      -->
+
+      <div id="mailbox">
+        <ul id="mailControls">
+          <li> Compose </li>
+          <li> Delete</li>
+          <li> Search</li>
+          <li> Mark all as Read </li>
+        </ul>
+        <div id="mailList">
+          <a href="#1">Totally Legit Mail</a>
+          <a href="#2">Example 2</a>
+          <a href="#3">What is love?</a>
+          <a href="#4">GROW HARD FAAAAAST</a>
+          <a href="#5">Butts, with 3 Cs!!!!!</a>
+        </div>
+      </div>
+
+      <div class="mailThread">
+        <article>
+          <table>
+            <tr>
+              <th colspan='2'> How to do Threads </th>
+            </tr>
+            <tr>
+              <td rowspan='3'>
+                <p> User Image</p>
+                <p> User Post Count </p>
+                <p> Date Joined </p>
+                <p> Message User </p>
+                <p> Edit Post (if current user or Admin) </p>
+                <p> Delete Post (if current user or Admin) </p>
+              </td>
+              <td> Donec velit velit, finibus et varius vitae, tempus sed lacus. Phasellus metus enim, sollicitudin vitae libero sit amet, faucibus fringilla dui. Etiam suscipit, arcu non volutpat molestie, neque tellus feugiat risus, et faucibus purus diam in turpis. Phasellus sed fringilla leo. Ut faucibus elit at dolor finibus pellentesque. Donec non massa sollicitudin, eleifend ipsum eu, convallis nisl. Etiam luctus bibendum tincidunt. Quisque lacinia congue urna, sit amet elementum massa pellentesque at. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas sagittis leo pulvinar, egestas tortor nec, cursus elit. Proin non odio elementum, pretium tortor quis, luctus arcu.</td>
+            </tr>
+            <tr>
+              <td> Hey! I just met you, and this is crazy, but like my post, or you're lazy. </td>
+            </tr>
+            <tr>
+              <td><p> Date Posted  </p> <p>Share this post! (Include actual links later) </p></td>
+            </tr>
+          </table>
+        </article>
+
+        <article id="userPost">
+          <form method="post" action="http://www.randyconnolly.com/tests/process.php">
+              <p>
+                <input type="text" name="submitted-text"/>
+                <input type="submit"/>
+              </p>
+          </form>
+        </article>
+
+      </div>
+    </div>
+
+    <footer>
+      <p> @CreativeContent 2018 </p>
+    </footer>
+  </body>
+</html>

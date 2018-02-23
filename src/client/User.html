@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/styling.css" />
+    <title> Creative Content</title>
+  </head>
+  <body>
+    <header>
+      <div id=topBar>
+        <a id=home href="home.html"><img src = "images/logo.png" alt="Home"></a></li>
+        <form id=search method="get" action="http://www.randyconnolly.com/tests/process.php">
+          <input type="text" name="Search"/>
+        </form>
+        <nav>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="news.html">News</a></li>
+            <li>Login </li>
+          </ul>
+        </nav>
+        <article id="loggedUser">
+          <div>
+            <figure>
+              <a href="user.html"><img src = "images/user.png" alt="Go to your User Page"></a>
+            </figure>
+          </div>
+          <div>
+            <a href="mail.html"><img src = "images/mail.png" alt="Go to your Mail"></a>
+          </div>
+        </article>
+      </div>
+    </header>
+
+    <div id="main">
+      <div id="buttons">
+        <button onclick="myFunction('Account_Info')"> Account Info </button>
+        <button onclick="myFunction('Account_Settings')"> Account Settings </button>
+        <button onclick="myFunction('Post_Flair')"> Post Flair </button>
+        <button onclick="myFunction('Admin')"> Admin </button>
+      </div>
+
+      <article class="settings" id="Account_Info">
+        <form method="post" action="http://www.randyconnolly.com/tests/process.php">
+          <fieldset>
+            <p>
+              <label>Email: </label>
+              <input type="text" name="email" placeholder="Enter Name"/>
+            </p>
+            <p>
+              <label>Reveal Account Info? </label>
+              <input type="checkbox" name="first" />
+            </p>
+            <p>
+              <label>Gender: </label>
+              <input type="radio" name="gender" value="Male"> Male
+              <input type="radio" name="gender" value="Female" /> Female
+              <input type="radio" name="gender" value="Other" /> Other
+            </p>
+            <p>
+              <input type="submit" />
+              <input type="reset" />
+            </p>
+          </fieldset>
+        </form>
+      </article>
+
+      <article class="settings" id="Account_Settings">
+        <form method="post" action="http://www.randyconnolly.com/tests/process.php">
+          <fieldset>
+            <p>
+              <label>UHH CRAAAAAP </label>
+              <input type="text" name="WHAT" placeholder="WHAT THE FUCK"/>
+            </p>
+            <p>
+              <input type="submit" />
+              <input type="reset" />
+            </p>
+          </fieldset>
+        </form>
+      </article>
+
+      <article class="settings" id="Post_Flair">
+        <form method="post" action="http://www.randyconnolly.com/tests/process.php">
+          <fieldset>
+            <p>
+              <label>BUUUUUUH </label>
+              <input type="text" name="WHAT" placeholder="WHAT THE FUCK"/>
+            </p>
+            <p>
+              <input type="submit" />
+              <input type="reset" />
+            </p>
+          </fieldset>
+        </form>
+      </article>
+
+      <article class="settings" id="Admin">
+        <form method="post" action="http://www.randyconnolly.com/tests/process.php">
+          <fieldset>
+            <p>
+              <label>WAT DOOOO </label>
+              <input type="checkbox" name="first" />
+            </p>
+          </fieldset>
+        </form>
+      </article>
+
+    </div>
+    <script>
+      var x = "Account_Info";
+      function myFunction(y){
+        var i = document.getElementById(y);
+        if(x !== y){
+          (document.getElementById(x)).style.display = "none";
+          i.style.display = "block";
+          x = y;
+        }
+      }
+      function displayAccount(){
+        var p = document.getElementById('loggedUser');
+        if(p.style.display == "none"){
+          p.style.display = "block";
+        }
+        else if(p.style.display === "block" ){
+          p.style.display = "none";
+        }
+      }
+
+    </script>
+
+    <footer>
+      <p> @CreativeContent 2018 </p>
+    </footer>
+  </body>
+</html>

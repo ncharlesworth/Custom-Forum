@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/styling.css" />
+    <title> Creative Content</title>
+  </head>
+  <body>
+    <header>
+      <div id=topBar>
+        <a id=home href="home.html"><img src = "images/logo.png" alt="Home"></a></li>
+        <form id=search method="get" action="http://www.randyconnolly.com/tests/process.php">
+          <input type="text" name="Search"/>
+        </form>
+        <nav>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><p>Login</p></li>
+          </ul>
+        </nav>
+      </div>
+
+      <article id="loggedUser">
+        <div>
+          <figure>
+            <a href="user.html"><img src = "images/user.png" alt="Go to your User Page"></a>
+          </figure>
+        </div>
+        <div>
+          <a href="mail.html"><img src = "images/mail.png" alt="Go to your Mail"></a>
+        </div>
+      </article>
+    </header>
+
+    <div id="main">
+      <article id="login">
+        <form method="get" action="http://www.randyconnolly.com/tests/process.php">
+          <fieldset>
+            <p>
+              <label> Username: </label>
+              <input type="text" name="Username" placeholder="type Name here"/>
+            </p>
+            <p>
+              <label> Password: </label>
+              <input type="password" name="password" placeholder="type Password here"/>
+            </p>
+            <p>
+              <input type="submit"/>
+            </p>
+          </fieldset>
+        </form>
+      </article>
+    </div>
+    <footer>
+      <p> @CreativeContent 2018 </p>
+    </footer>
+  </body>
+</html>
