@@ -14,22 +14,77 @@ include "Temp-Client-Stuff/header.php";
 
 
   if(mysqli_num_rows($results) > 0){
-    echo "<figure class='fPost'>";
-    echo "<a href='#'><img src = 'images/book.png' alt='Go to a Staff favourite post'></a>";
-    echo "<figcaption> fPost 1</figcaption>" ;
-    echo "</figure>" ;
-    echo "<figure class='fPost'>" ;
-    echo "<a href='#'><img src = 'images/book.png' alt='Go to a Staff favourite pos'></a>" ;
-    echo "<figcaption> fPost 2</figcaption>" ;
-    echo "</figure>" ;
-    echo "<figure class='fPost'>" ;
-    echo "<a href='#'><img src = 'images/book.png' alt='Go to a Staff favourite post'></a>";
-    echo "<figcaption> fPost 3</figcaption>";
-    echo "</figure>";
-    echo "<figure class='fPost'>";
-    echo "<a href='#'><img src = 'images/book.png' alt='Go to a Staff favourite post'></a>";
-    echo "<figcaption> fPost 4</figcaption>";
-    echo "</figure>";
+
+    $fPostSQL = "SELECT * FROM posts WHERE fPost=1 ORDER BY postId DESC";
+    $fPostResults = mysqli_query($connection, $fPostSQL);
+    if($fPostResults){
+      $fpostPlaceholders = 4 - mysqli_num_rows($fPostResults);
+      $fPosts = 0;
+
+      for($i = 0; $i < $fpostPlaceholders; $i++){
+        $fPosts += 1;
+        echo "<figure class='fPost'>";
+        echo "<a href='#'><img src = 'images/default_fpost.png' alt='Go to a Staff favourite post'></a>";
+        echo "<figcaption> fPost ".$fPosts."</figcaption>" ;
+        echo "</figure>" ;
+      }
+
+      while($fPostRows = mysqli_fetch_assoc($fPostResults)){
+
+        if($fPosts >3){
+          break;
+        }
+        if($fPostRows['modOnly'] == true){
+          continue;
+        }
+
+        $fpostThreadSQL = "SELECT threadTitle, threadTopic FROM thread WHERE threadId=".$fPostRows['postThread'];
+        $fPostThreadTitle = mysqli_fetch_assoc(mysqli_query($connection, $fpostThreadSQL));
+
+        $fpostTopicSQL = "SELECT super_Topic FROM topic WHERE topicId=".$fPostThreadTitle['threadTopic'];
+        $fpostTopic = mysqli_fetch_assoc(mysqli_query($connection, $fpostTopicSQL));
+
+        echo "<figure class='fPost'>";
+        echo "<a href=display_Thread.php?thrid=".$fPostRows['postThread']."#".$fPostRows['postId']."'><img src='images/";
+        if($fpostTopic['super_Topic'] == 1){
+          echo "book.png";
+        }
+        else if($fpostTopic['super_Topic'] == 2){
+          echo "poetry.png";
+        }
+        else if($fpostTopic['super_Topic'] == 3){
+          echo "art.png";
+        }
+        else if($fpostTopic['super_Topic'] == 4){
+          echo "photo.png";
+        }
+        else{
+          echo "default_fpost.png";
+        }
+        echo "' alt='".$fPostThreadTitle['threadTitle']."'></a>";
+        echo "<figcaption>".$fPostThreadTitle['threadTitle']."</figcaption>";
+        echo "</figure>" ;
+        $fPosts += 1;
+      }
+    }
+    else{
+      echo "<figure class='fPost'>";
+      echo "<a href='#'><img src = 'images/book.png' alt='Go to a Staff favourite post'></a>";
+      echo "<figcaption> fPost 1</figcaption>" ;
+      echo "</figure>" ;
+      echo "<figure class='fPost'>" ;
+      echo "<a href='#'><img src = 'images/book.png' alt='Go to a Staff favourite post'></a>" ;
+      echo "<figcaption> fPost 2</figcaption>" ;
+      echo "</figure>" ;
+      echo "<figure class='fPost'>" ;
+      echo "<a href='#'><img src = 'images/book.png' alt='Go to a Staff favourite post'></a>";
+      echo "<figcaption> fPost 3</figcaption>";
+      echo "</figure>";
+      echo "<figure class='fPost'>";
+      echo "<a href='#'><img src = 'images/book.png' alt='Go to a Staff favourite post'></a>";
+      echo "<figcaption> fPost 4</figcaption>";
+      echo "</figure>";
+    }
 
     if( $_SESSION['userRank'] < 2){
       echo "<a href='topic.php?topid=0' id='newTopic'> Create New Topic </a>";

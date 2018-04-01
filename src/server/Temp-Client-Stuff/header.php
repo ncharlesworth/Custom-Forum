@@ -10,22 +10,28 @@ include "sessionInfo.php";
     <link rel="stylesheet" href="css/reset.css" />
     <link rel='stylesheet' type='text/css' href='css/styling.css' />
     <script type="text/javascript" src="js/creative_content.js"></script>
-  <!--  <script type="text/javascript" src="js/fieldCheck.js"></script>
-    <script type="text/javascript" src="js/userInfoBoxReveal.js"></script> -->
+    <?php
+    /*  <script type="text/javascript" src="js/fieldCheck.js"></script>
+    <script type="text/javascript" src="js/userInfoBoxReveal.js"></script> */?>
     <title> Creative Content</title>
   </head>
   <body>
     <header>
       <div id=topBar>
-        <a id=home href="index.php"><img src = "images/logo.png" alt="Home"></a></li>
-        <form id=search method="get" action="search.php">
-          <input type="text" name="Search"/>
-        </form>
+        <a id=home href="index.php"><img src = "images/logo.png" alt="Home"></a>
+        <?php
+        /*  <form id=search method="get" action="search.php">
+        <input type="text" name="Search"/>
+        </form>*/
+        ?>
         <nav>
           <ul>
-            <li><a href="about.html">About</a></li>
-            <li><a href="news.html">News</a></li>
-            <li><button type="button" id="userInfo">
+            <?php
+            echo "<li><a id='search' href=search.php> Search </a></li>"
+            ?>
+            <li><a href="about.php">About</a></li>
+            <li><a href="display_Topic.php?topid=6">News</a></li>
+            <li id="liButtonBackground"><button type="button" id="loginButton">
               <?php
               if($_SESSION['loggedIn']) {
                 echo $_SESSION['userName'];
@@ -44,11 +50,11 @@ include "sessionInfo.php";
           if($_SESSION['loggedIn']){
             echo '<div>';
               echo '<figure>';
-                echo '<a href="user.html"><img src = "images/user.png" alt="Go to your User Page">' . $_SESSION['userName'] . '</a>';
+                echo "<a href=user.php?id=" . $_SESSION['userId'] . "><img src = 'images/user.png' alt='Go to your User Page'></a>";
               echo '</figure>';
             echo '</div>';
             echo '<div>';
-              echo '<a href="mail.html"><img src = "images/mail.png" alt="Go to your Mail"></a>';
+              echo "<a href='mail.php'><img src = 'images/mail.png' alt='Go to your Mail'></a>";
             echo '</div>';
             echo 'Not you? <a href="logout.php">Sign out</a>';
           }
@@ -66,7 +72,7 @@ include "sessionInfo.php";
                 echo  '<p>';
                  echo  '<input type="submit" value="Submit" >';
                 echo  '</p>';
-                echo '<a href="test_newuser.php">Create an Account</a>.';
+                echo '<a href="new_User.php">Create an Account</a>.';
               echo  '</fieldset>';
             echo  '</form>';
           }

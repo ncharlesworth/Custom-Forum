@@ -25,9 +25,9 @@ if($_SESSION['loggedIn'] == true && $_SESSION['userRank'] < 2){
 
     mysqli_autocommit($connection, FALSE);
 
-    $topName = $_POST["topicName"];
-    $topDesc = $_POST["topicDescription"];
-    $homeTopic = $_POST["topid"];
+    $topName = mysqli_real_escape_string($connection, $_POST["topicName"]);
+    $topDesc = mysqli_real_escape_string($connection, $_POST["topicDescription"]);
+    $homeTopic = mysqli_real_escape_string($connection, $_POST["topid"]);
 
     if($homeTopic == 0){
       if(empty($_POST['modOnly'])){
@@ -38,7 +38,9 @@ if($_SESSION['loggedIn'] == true && $_SESSION['userRank'] < 2){
       }
     }
     else{
-      if(empty($_POST['modOnly'])){
+      $isTopModOnlySQL = "SELECT modOnly FROM topic WHERE topicId=".$homeTopic;
+      $isTopModOnly = mysqli_fetch_assoc(mysqli_query($connection, $isTopModOnlySQL));
+      if(empty($_POST['modOnly']) && $isTopModOnly['modOnly'] == 0){
         $sql = "INSERT INTO topic(topicName, topicDescription, super_Topic) VALUES ('$topName', '$topDesc', '$homeTopic')";
       }
       else{
@@ -47,19 +49,22 @@ if($_SESSION['loggedIn'] == true && $_SESSION['userRank'] < 2){
     }
 
     if(mysqli_query($connection, $sql)){
+      $insertId = mysqli_insert_id($connection);
       mysqli_commit($connection);
-      echo "Your topic has been created! ";
-      Echo "<a href='display_Topic.php?topid=" . mysqli_insert_id($connection) . "'> Click here to go to your Topic.";
+      echo "Your topic has been created! <br>";
+      Echo "<a href='display_Topic.php?topid=" . $insertId . "'> Click here to go to your Topic.</a>";
     }
     else{
       mysqli_rollback($connection);
-      echo "There was an error: " . mysqli_error($connection);
+      echo "There was an error: " . mysqli_error($connection) ."<br>";
+      echo "<a href='".$_SERVER['HTTP_REFERER']."'> Return to previous page.</a>";
     }
   }
   mysqli_close($connection);
 }
 else{
-  echo "You need to be a Moderator to create Topics. Feel free to post and create threads if you are a user, however. And not banned.";
+  echo "You need to be a Moderator to create Topics. Feel free to post and create threads if you are a user, however. And not banned.<br>";
+  echo "<a href='".$_SERVER['HTTP_REFERER']."'> Return to previous page.</a>";
 }
 
 

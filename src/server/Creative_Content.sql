@@ -31,15 +31,18 @@ CREATE TABLE `users` (
   `userRank` int(1),
   `postCount` int(8) DEFAULT '0',
   `signature` varchar(255),
-  `gender`    varchar(10),
-  `hideInfo`  boolean NOT NULL DEFAULT 0,
-  `userPicture` BLOB,
-  /*Should probably have this be a reference to the harddrive, where user images are kept and called when neccessary
-      Users would end files then, and that's stored on the server*/
   `lastAction` timestamp NOT NULL,
   `user_status` int(8) NOT NULL,
+  `unbanDate`   date,
   UNIQUE INDEX userName_unique (userName),
   PRIMARY KEY (userId)
+) ENGINE=INNODB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `userimages` (
+  `userId` int(8) NOT NULL,
+  `userPicture` BLOB NOT NULL,
+  `contentType` varchar(255) NOT NULL,
+  PRIMARY KEY (`userId`)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `topic` (
@@ -61,7 +64,7 @@ CREATE TABLE `thread` (
   `threadTitle`     varchar(255) NOT NULL,
   `threadBy`        int(8) NOT NULL,
   `modOnly`         boolean NOT NULL DEFAULT 0,
-/*  `lastPost`        INT(8) NOT NULL,*/
+  `bulleted`        boolean DEFAULT 0,
   `status`          int(8) NOT NULL,
   PRIMARY KEY (threadId)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1;
@@ -70,9 +73,12 @@ CREATE TABLE `posts` (
   `postId`         int(8) NOT NULL AUTO_INCREMENT,
   `postContent`    text NOT NULL,
   `postDate`       datetime NOT NULL,
+  `editDate`       datetime,
   `postThread`     int(8) NOT NULL,
   `postBy`         int(8) NOT NULL,
+  `editBy`         int(8),
   `status`         int(8) NOT NULL,
+  `fPost`          boolean DEFAULT 0,
   `modOnly`        boolean NOT NULL DEFAULT 0,
   PRIMARY KEY (postId)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1;
@@ -121,6 +127,11 @@ ALTER TABLE posts ADD FOREIGN KEY (status) REFERENCES status(status_id) ON DELET
 
 ALTER TABLE topic ADD FOREIGN KEY (super_Topic) REFERENCES topic(topicId) ON DELETE CASCADE ON UPDATE CASCADE;
 /*Add PK from other topic to this topic; used for organizational purposes*/
+
+ALTER TABLE posts ADD FOREIGN KEY (editBy) REFERENCES users(userId) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE `userimages`
+  ADD CONSTRAINT `userimages_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 INSERT INTO `user_status`(`name`) VALUES ('testMod');

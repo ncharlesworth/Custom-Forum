@@ -35,7 +35,6 @@ header{
   text-align: right;
 }
 nav{
-  text-align: right;
   display: table-cell;
   color:white;
   vertical-align:middle;
@@ -46,10 +45,23 @@ nav a{
   text-decoration:none;
 }
 nav ul li{
+  vertical-align:middle;
   display:inline-block;
   padding:0.65em;
+  width:3rem;
 }
 nav ul li:hover{
+  background-color:green;
+}
+#loginButton{
+  vertical-align:middle;
+  display:inline-block;
+  width:5rem;
+}
+#liButtonBackground{
+  width:5rem;
+}
+#liButtonBackground:hover{
   background-color:green;
 }
 #loggedUser{

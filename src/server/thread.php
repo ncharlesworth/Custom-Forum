@@ -27,15 +27,12 @@ include "Temp-Client-Stuff/header.php";
     else{
       if(validatePOSTInfo($reqThreadInfo)){
 
-        /*PLEASE LEARN HOW TRANSASCTIONS WORK, should use one so I don't keep accidentally making statuses and threads without content*/
-        /*Also, so that my thread isn't made without a post*/
-
         mysqli_autocommit($connection, FALSE);
 
-        $threadTopic = $_POST['threadTopic']; /*This is supposed to link to the part of the forum it's in*/
-        $threadDescription = $_POST['threadDescription'];
-        $threadTitle = $_POST['threadTitle'];
-        $postContent = $_POST['postContent'];
+        $threadTopic = mysqli_real_escape_string($connection, $_POST['threadTopic']);
+        $threadDescription = mysqli_real_escape_string($connection, $_POST['threadDescription']);
+        $threadTitle = mysqli_real_escape_string($connection, $_POST['threadTitle']);
+        $postContent = mysqli_real_escape_string($connection, $_POST['postContent']);
         $time = date("Y-m-d h:i:s");
         $tempUser = $_SESSION['userId'];
 
@@ -49,7 +46,10 @@ include "Temp-Client-Stuff/header.php";
 
             $statusId2 = mysqli_insert_id($connection);
 
-            if(empty($_POST['modOnly'])){
+            $isTopModOnlySQL = "SELECT modOnly FROM topic WHERE topicId=".$threadTopic;
+            $isTopModOnly = mysqli_fetch_assoc(mysqli_query($connection, $isTopModOnlySQL));
+
+            if(empty($_POST['modOnly']) && $isTopModOnly['modOnly'] ==0){
               $threadSQL = "INSERT INTO thread (threadDescription, threadDate, threadTopic, threadTitle, threadBy, status)
               VALUES ('$threadDescription','$time','$threadTopic', '$threadTitle', '$tempUser', '$statusId2')";
             }
@@ -78,8 +78,10 @@ include "Temp-Client-Stuff/header.php";
 
 
                mysqli_commit($connection);
-                echo "Your Thread has been Created!";
-                echo "<a href='display_thread.php?thrid=" . $threadId . "'> Click here to see your thread.</a>";
+              /*  echo "Your Thread has been Created!";
+                echo "<a href='display_thread.php?thrid=" . $threadId . "'> Click here to see your thread.</a>";*/
+
+              header("Location: http://localhost/project/src/server/display_Thread.php?thrid=" . mysqli_real_escape_string($connection, $threadId));
              }
              else{
                mysqli_rollback($connection);

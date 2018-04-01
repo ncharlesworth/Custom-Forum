@@ -25,6 +25,20 @@ if($idResult){
     if($curThreadId['modOnly'] == true){
      echo "Viewing Moderated Thread";
     }
+    if($_SESSION['userRank'] <2){
+      echo "<form method='post' action='delete.php'><input type=hidden name='thrid' value=".mysqli_real_escape_string($connection, $_GET['thrid']).
+         "><input type='submit' name='deletebutton' value='Delete This Thread'></form>";
+
+      echo "<form name='bulletForm' method='post' action='bullet.php'>";
+      echo "<input type='hidden' name='threadId' value=".$curThreadId['threadId'].">";
+      if($curThreadId['bulleted'] == 1){
+        echo "<input type='submit' name='bullet' value='Unbullet Thread?'>";
+      }
+      else{
+        echo "<input type='submit' name='bullet' value='Bullet Thread?'>";
+      }
+      echo "</form>";
+    }
 
     $postsSQL = "SELECT * FROM posts WHERE `postThread`='" . $curThreadId['threadId'] . "'";
 
@@ -39,18 +53,42 @@ if($idResult){
         $postUserResult = mysqli_query($connection, $postUserSQL);
         $postUser = mysqli_fetch_assoc($postUserResult);
 
-        echo "<article class='post' id ='#" . $row['postId'] . "'>
+        $userImgSQL ="SELECT * FROM userimages WHERE `userId`=" . $row['postBy'];
+        $userImg =  mysqli_fetch_assoc(mysqli_query($connection, $userImgSQL));
+
+        echo "<article class='post' id ='" . $row['postId'] . "'>
           <table>
             <tr>
-              <td rowspan='3' class='userThread' >
-                <p> <img class='userImage' src='" . $postUser['userPicture'] . "' alt='user1 Image'></p>
-                <a href='user.php?userid=". $postUser['userId'] ."'>" . $postUser['userName'] . "</a>
+              <td rowspan='3' class='userThread' >";
+
+              if($userImg){
+                $imgSQL = "SELECT contentType, userPicture FROM userimages where userID=?";
+                $stmt = mysqli_stmt_init($connection);
+                mysqli_stmt_prepare($stmt, $imgSQL);
+                mysqli_stmt_bind_param($stmt, "i", $row['postBy']);
+                $result = mysqli_stmt_execute($stmt) or die(mysqli_stmt_error($stmt));
+                mysqli_stmt_bind_result($stmt, $type, $image);
+                mysqli_stmt_fetch($stmt);
+                mysqli_stmt_close($stmt);
+                echo '<p><img class="userImage" src="data:image/' . $type
+                . ';base64,' . base64_encode($image).'" alt="User Image"/></p>';
+              }
+              else{
+                echo "<figure>No Image Set for this User </figure>";
+              }
+                echo "<a href='user.php?userid=". $postUser['userId'] ."'>" . $postUser['userName'] . "</a>
                 <p> Posts:" . $postUser['postCount'] . "</p>
                 <p> Joined: " . $postUser['creationDate'] . "</p>";
                 if($_SESSION['userRank'] <3){
                   echo "<a href='mail.php?userid=". $postUser['userId'] . "'>Message User</a>";
                   echo "<a href='#' id='vote'>Upvote Post</a>";
                   echo "<a href='#' id='vote'>Downvote Post</a>";
+                }
+                if($_SESSION['userRank'] < 2){
+                  echo "<form name='fPostForm' method='post' action='fpost.php'>";
+                  echo "<input type='hidden' name='postId' value=".$row['postId'].">";
+                  echo "<input type='submit' name='fPostSubmit' value='Favourite Post?'>";
+                  echo "</form>";
                 }
                 if( $_SESSION['userId'] == $row['postBy'] || $_SESSION['userRank'] <2){
                   echo "<a id='editPost' href='edit_Post.php?pid=" . $row['postId'] . "'>Edit Post</a>";
@@ -63,7 +101,13 @@ if($idResult){
                     <td class='Signature'>" . $postUser['signature'] . "</td>
                   </tr>
                   <tr>
-                    <td class='postDate'><p> Date Posted: " . $row['postDate']. "  </p> <p>Share this post! (Include actual links later) </p></td>
+                    <td class='postDate'><p> Date Posted: " . $row['postDate'];
+
+                    if($row['editDate'] != null){
+                      echo " (Last Edit On " . $row['editDate'] . " by " . $row['editBy'] . ")";
+                    }
+
+                    echo "  </p> <p>Share this post! (Include actual links later) </p></td>
                   </tr>
                   </table>
                 </article>";
