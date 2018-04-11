@@ -121,7 +121,7 @@ if(checkGET()){
                 echo "<td class='tableTopic'> <h3> <a href='display_thread.php?thrid=" .
                         $threadResult['threadId']. "'>" . $threadResult['threadTitle'] . " </a></h3></td>";
                 echo "<td rowspan='2' class='lPost'> <a href=display_thread.php?thrid="
-                      . $threadResult['threadId'] . "#" . $postThread['postId']  . ">User's Post</a></td>
+                      . $threadResult['threadId'] . "#" . $postThread['postId']  . ">User's Post</a><br><p>Views:".$threadResult['viewCount']."</p></td>
                       </tr>";
                 echo "<tr>
                        <td class='topicDescription'>" . $threadResult['threadDescription'] ."</td>
@@ -172,7 +172,7 @@ if(checkGET()){
               echo "<td class='tableTopic'> <h3> <a href='display_thread.php?thrid=" .
                         $threadResult['threadId']. "'>" . $threadResult['threadTitle'] . " </a></h3></td>";
               echo "<td rowspan='2' class='lPost'> <a href=display_thread.php?thrid="
-                        . $threadResult['threadId'] . "#" . $postThread['postId']  . ">Post With Phrase</a></td>
+                        . $threadResult['threadId'] . "#" . $postThread['postId']  . ">Post With Phrase</a><br><p>Views:".$threadResult['viewCount']."</p></td>
                         </tr>";
               echo "<tr>
                <td class='topicDescription'>" . $threadResult['threadDescription'] ."</td>
@@ -216,7 +216,7 @@ if(checkGET()){
               echo "<td class='tableTopic'> <h3> <a href='display_thread.php?thrid=" .
                       $threads['threadId'] . "'>" . $threads['threadTitle'] . " </a></h3></td>";
               echo "<td rowspan='2' class='lPost'> <a href=display_thread.php?thrid="
-                      . $threads['threadId'] . "#" . $lastPostResult['postId']  . ">Last Post</a></td>
+                      . $threads['threadId'] . "#" . $lastPostResult['postId']  . ">Last Post</a><br><p>Views:".$threads['viewCount']."</p></td>
                       </tr>";
               echo "<tr>
                  <td class='topicDescription'>" . $threads['threadDescription'] ."</td>
@@ -249,7 +249,7 @@ if(checkGET()){
               echo "<td class='tableTopic'> <h3> <a href='display_thread.php?thrid=" .
                       $fPostThread['threadId'] . "'>" . $fPostThread['threadTitle'] . " </a></h3></td>";
               echo "<td rowspan='2' class='lPost'> <a href=display_thread.php?thrid="
-                      . $fPostThread['threadId'] . "#" . $fpostRow['postId']  . ">Staff Favourite Post</a></td>
+                      . $fPostThread['threadId'] . "#" . $fpostRow['postId']  . ">Staff Favourite Post</a><br><p>Views:".$fPostThread['viewCount']."</p></td>
                       </tr>";
               echo "<tr>
                  <td class='topicDescription'>" . $fPostThread['threadDescription'] ."</td>
