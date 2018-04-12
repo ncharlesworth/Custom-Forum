@@ -9,8 +9,7 @@ include "connectType.php";
 if(validatePOSTInfo($reqPostInfo)){
   include "connect.php";
 
-        /*PLEASE LEARN HOW TRANSASCTIONS WORK, should use one so I don't keep accidentally making statuses and threads without content*/
-        /*Also, so that my thread isn't made without a post*/
+  mysqli_autocommit($connection, false);
 
   $postContent = $_POST['postContent'];
   $time = date("Y-m-d h:i:s");
@@ -38,15 +37,19 @@ if(validatePOSTInfo($reqPostInfo)){
 
       mysqli_query($connection, $toUpdateSQL);
 
+      mysqli_commit($connection);
 
-      header("Location: display_Thread.php?thrid=" .  $postThread);
+
+      header("Location: display_thread.php?thrid=" .  $postThread);
     }
     else{
+	mysqli_rollback($connection);
       echo "There was an error creating your Post: " . mysqli_error($connection);
       echo "<a href='display_thread.php?thrid=" . $postThread . "'> Click here to return to your thread.</a>";
     }
   }
   else{
+	mysqli_rollback($connection);
     echo "There was an error creating your Post: " . mysqli_error($connection);
     echo "<a href='display_thread.php?thrid=" . $postThread . "'> Click here to return to your thread.</a>";
   }
@@ -54,7 +57,7 @@ if(validatePOSTInfo($reqPostInfo)){
 }
 else{
   echo "You were missing some data. Please post once fixed.";
-  echo "<a href='display_thread.php?thrid=" . $postThread . "'> Click here to return to your thread.</a>";
+  echo "<a href='" . $_SERVER[HTTP_REFERER] . "'> Click here to return to your thread.</a>";
 }
 
 

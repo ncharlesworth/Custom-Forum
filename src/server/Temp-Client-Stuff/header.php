@@ -105,6 +105,7 @@ ob_start();
               echo  '</fieldset>';
             echo  '</form>';
           }
+	mysqli_close($headerConnection);
         ?>
         </div>
       </article>

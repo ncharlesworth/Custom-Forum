@@ -25,7 +25,7 @@ include "Temp-Client-Stuff/header.php";
       for($i = 0; $i < $fpostPlaceholders; $i++){
         $fPosts += 1;
         echo "<figure class='fPost'>";
-        echo "<a href='#'><img src = 'images/default_fpost.png' alt='Go to a Staff favourite post'></a>";
+        echo "<a href='#'><img src = 'images/default.png' alt='Go to a Staff favourite post'></a>";
         echo "<figcaption> fPost ".$fPosts."</figcaption>" ;
         echo "</figure>" ;
       }
@@ -39,29 +39,15 @@ include "Temp-Client-Stuff/header.php";
           continue;
         }
 
-        $fpostThreadSQL = "SELECT threadTitle, threadTopic FROM thread WHERE threadId=".$fPostRows['postThread'];
+        $fpostThreadSQL = "SELECT * FROM thread WHERE threadId=".$fPostRows['postThread'];
         $fPostThreadTitle = mysqli_fetch_assoc(mysqli_query($connection, $fpostThreadSQL));
 
         $fpostTopicSQL = "SELECT super_Topic FROM topic WHERE topicId=".$fPostThreadTitle['threadTopic'];
         $fpostTopic = mysqli_fetch_assoc(mysqli_query($connection, $fpostTopicSQL));
 
         echo "<figure class='fPost'>";
-        echo "<a href=display_thread.php?thrid=".$fPostRows['postThread']."#".$fPostRows['postId']."'><img src='images/";
-        if($fpostTopic['super_Topic'] == 1){
-          echo "book.png";
-        }
-        else if($fpostTopic['super_Topic'] == 2){
-          echo "poetry.png";
-        }
-        else if($fpostTopic['super_Topic'] == 3){
-          echo "art.png";
-        }
-        else if($fpostTopic['super_Topic'] == 4){
-          echo "photo.png";
-        }
-        else{
-          echo "default_fpost.png";
-        }
+        echo "<a href=display_thread.php?thrid=".$fPostRows['postThread']."#".$fPostRows['postId']."'><img src='" . $fPostThreadTitle['threadPic'] ;
+
         echo "' alt='".$fPostThreadTitle['threadTitle']."'></a>";
         echo "<figcaption>".$fPostThreadTitle['threadTitle']."</figcaption>";
         echo "</figure>" ;
@@ -70,19 +56,19 @@ include "Temp-Client-Stuff/header.php";
     }
     else{
       echo "<figure class='fPost'>";
-      echo "<a href='#'><img src = 'images/book.png' alt='Go to a Staff favourite post'></a>";
+      echo "<a href='#'><img src = 'images/default.png' alt='Go to a Staff favourite post'></a>";
       echo "<figcaption> fPost 1</figcaption>" ;
       echo "</figure>" ;
       echo "<figure class='fPost'>" ;
-      echo "<a href='#'><img src = 'images/book.png' alt='Go to a Staff favourite post'></a>" ;
+      echo "<a href='#'><img src = 'images/default.png' alt='Go to a Staff favourite post'></a>" ;
       echo "<figcaption> fPost 2</figcaption>" ;
       echo "</figure>" ;
       echo "<figure class='fPost'>" ;
-      echo "<a href='#'><img src = 'images/book.png' alt='Go to a Staff favourite post'></a>";
+      echo "<a href='#'><img src = 'images/default.png' alt='Go to a Staff favourite post'></a>";
       echo "<figcaption> fPost 3</figcaption>";
       echo "</figure>";
       echo "<figure class='fPost'>";
-      echo "<a href='#'><img src = 'images/book.png' alt='Go to a Staff favourite post'></a>";
+      echo "<a href='#'><img src = 'images/default.png' alt='Go to a Staff favourite post'></a>";
       echo "<figcaption> fPost 4</figcaption>";
       echo "</figure>";
     }
@@ -113,7 +99,7 @@ include "Temp-Client-Stuff/header.php";
         }
 
         echo "<tr>";
-        echo "<td rowspan='2' class='topicPicture'><img src = '".$row2['topicPic']."' alt='".$row2['topicName']." Image'></td>";
+        echo "<td rowspan='2' class='topicPicture'><img src = '".$row2['topicPic']."' alt='".$row2['topicName']." Image' /></td>";
         echo "<td class='tableTopic'> <h3><a href='display_Topic.php?topid=". $row2['topicId'] ."'>" . $row2['topicName'] . "</a></h3></td>";
         echo "<td rowspan='2' class='lPost'>";
 

@@ -1,9 +1,9 @@
 <?php
 
-$host = "localhost";
-$database = "creative_content";
-$user = "root";
-$password = "";
+$host = "cosc360.ok.ubc.ca";
+$database = "db_49440167";
+$user = "49440167";
+$password = "49440167";
 
 $headerConnection = mysqli_connect($host, $user, $password, $database);
 

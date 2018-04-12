@@ -1,0 +1,31 @@
+ ----- remake the database for mod viewing
+
+ ----- update display_topic/thread to reflect anything that a mod doesn't want seen
+
+ ----- Update thread/topic to only show the option for modOnly if they are a mod
+
+ ````` Update display_Thread to check if there's a user, and if so, post a form
+	then maybe make a post.php page, copy the stuff from thread.php,
+ 	and link post.php in thread.php
+
+
+
+
+ ---  USER PAGE get (Only 3 ticks because I still need to do some work on it
+	- ALSO, upload image to server!?!?!?!?
+	- CHANGE PASS!?
+	- CHANGE ANY INFO!?
+
+Maybe work on mail page
+
+
+
+
+
+allow thread/category deletion?
+Prevent the first post of a thread from being deleted, unless the thread is deleted with it?
+When a post is deleted, it lowers the post count of that user?
+
+Edit all submitted content with mysqli_real_escape_string($connection, (stuff)) to prevent sql injection???
+
+ ----- update thread.php and post.php to update a user's account post number

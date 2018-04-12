@@ -1,4 +1,9 @@
 <?php
+include "Temp-Client-Stuff/header.php";
+?>
+
+
+<?php
 
 include "connect.php";
 include "connectType.php";
@@ -6,7 +11,6 @@ include "connectType.php";
 /*send the postId via GET*/
 
 if(checkGET()){
-  include "Temp-Client-Stuff/header.php";
 
   $tempSQL = "SELECT postBy FROM posts WHERE `postId`=" . mysqli_real_escape_string($connection, $_GET['pid']);
   $tempResult = mysqli_fetch_assoc(mysqli_query($connection, $tempSQL));
@@ -31,7 +35,6 @@ if(checkGET()){
   }
 
 
-  include "Temp-Client-Stuff/footer.php";
 }
 
 else {
@@ -54,25 +57,28 @@ else {
         $insertResult = mysqli_query($connection, $insertSQL);
 
         if($insertResult){
-          header("Location: http://localhost/project/src/server/display_Thread.php?thrid=" . $tempResult['postThread']);
+          header("Location: display_thread.php?thrid=" . $tempResult['postThread']);
         }
         else{
-          /*echo mysqli_error($connection);*/
-          header("Location: http://localhost/project/src/server/edit_Post.php?pid=" . mysqli_real_escape_string($connection, $_POST['postId']) . "&err=2");
+          echo "There was an error uploading post: ".mysqli_error($connection);
+	 echo "<a href='display_thread.php?thrid=" . $_SERVER['HTTP_REFERER'];
         }
       }
       else{
-        header("Location: http://localhost/project/src/server/display_Thread.php?thrid=" . $tempSQL['postThread'] . "&err=20");
-        /*echo "You do not have the authority to change this post.";*/
+	echo "You do not have the authority to change this post.";
+	echo "<a href='display_thread.php?thrid=" . $_SERVER['HTTP_REFERER'];
       }
     }
     else{
-      header("Location: http://localhost/project/src/server/edit_Post.php?pid=" . mysqli_real_escape_string($connection, $_POST['postId']) . "&err=1");
-      /*echo "You have left the content blank. Don't do that."*/
+      echo "You have left the content blank. Don't do that.";
+      echo "<a href='display_thread.php?thrid=" . $_SERVER['HTTP_REFERER'];
     }
   }
 }
 
 
 mysqli_close($connection);
+?>
+<?php
+include "Temp-Client-Stuff/footer.php";
 ?>

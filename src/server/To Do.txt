@@ -1,0 +1,35 @@
+Done!:
+ - Change Index/Display_Topic to show viewcount on latest Thread
+ - Added Picture Icons to User Info in Header
+ - "Fixed" Icons so they appear beside threads, to display their status!
+ - display_Thread updates viewcount
+ - On 10 views, a thread becomes a Hot Topic (Wsa gunna make this time based, but that's work)
+	NOTE, once a thread is hot it is always hot.
+ - Threads created automatically get their parent topic picture!
+ - If not a super topic, the topic borrows the picture of the parent. Otherwise you can choose!
+ - Also, fixed header() so it works on all pages, regardless of output! Snazzy! (Probably fixed everywhere, anyways)
+ - Search.php shows viewcount and icons!
+
+
+
+----- FOR SCHOOL -----
+Alter thread in Database to have viewCount
+
+Alter Thread in Database to have threadPic
+
+Alter topic in Database to have topicPic
+
+(Add Credit for some pictures in About.php)
+<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>     
+
+(Could put credit in footer instead)
+
+Updated Pages:
+- index.php
+- header.php
+- header_Connect.php
+- display topic.php
+- display thread.php
+- thread.php
+- Creative_Content.sql
+- all the new icons

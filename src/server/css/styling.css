@@ -71,7 +71,18 @@ nav ul li:hover{
   left:87rem;
   z-index: 10;
   background-color: #A98EB1;
+
 }
+#userinfobox{
+  border-color: black;
+  border-width: thin;
+  border-style: solid;
+}
+#userinfobox div{
+  display: table-cell;
+}
+
+
 /*Main Layout Starts Here*/
 #main{
   display: table;
