@@ -4,6 +4,7 @@ include "Temp-Client-Stuff/header.php";
 
 <?php
   include "connect.php";
+  include "views.php"; //$viewcountresults , assumes there is a $threadResult to use though
 
 
   /*Could change this so if there's no ID value in GET, it just shows the home
@@ -45,7 +46,7 @@ include "Temp-Client-Stuff/header.php";
         $fpostTopic = mysqli_fetch_assoc(mysqli_query($connection, $fpostTopicSQL));
 
         echo "<figure class='fPost'>";
-        echo "<a href=display_Thread.php?thrid=".$fPostRows['postThread']."#".$fPostRows['postId']."'><img src='images/";
+        echo "<a href=display_thread.php?thrid=".$fPostRows['postThread']."#".$fPostRows['postId']."'><img src='images/";
         if($fpostTopic['super_Topic'] == 1){
           echo "book.png";
         }
@@ -112,7 +113,7 @@ include "Temp-Client-Stuff/header.php";
         }
 
         echo "<tr>";
-        echo "<td rowspan='2' class='unread'><img src = 'images/unread.png' alt='Unread Messages'></td>";
+        echo "<td rowspan='2' class='topicPicture'><img src = '".$row2['topicPic']."' alt='".$row2['topicName']." Image'></td>";
         echo "<td class='tableTopic'> <h3><a href='display_Topic.php?topid=". $row2['topicId'] ."'>" . $row2['topicName'] . "</a></h3></td>";
         echo "<td rowspan='2' class='lPost'>";
 
@@ -123,7 +124,10 @@ include "Temp-Client-Stuff/header.php";
         $postResult = mysqli_fetch_assoc(mysqli_query($connection, $postidSQL));
 
         if($threadResult != null){
-          echo "<a href='display_thread.php?thrid=" . $postResult['postThread'] . "#" . $postResult['postId'] . "'>Last Post</a></td>";
+          echo "<a href='display_thread.php?thrid=" . $postResult['postThread'] . "#" . $postResult['postId'] . "'>Last Post</a>";
+          $tempViews = getViews($connection, $threadResult['threadId']);
+          echo "<br><p> Views: " . $tempViews['viewCount'] . "</td>";
+
         }
         else{
           echo "No Posts!";

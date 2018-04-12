@@ -51,6 +51,7 @@ CREATE TABLE `topic` (
   `topicDescription`     VARCHAR(255) NOT NULL,
   `modOnly`         boolean NOT NULL DEFAULT 0,
   `super_Topic` INT(8),
+  `topicPic` VARCHAR(255) NOT NULL,
 /*  `lastPost`        INT(8) NOT NULL,*/
   UNIQUE INDEX topicName_unique (topicName),
   PRIMARY KEY (topicId)
@@ -66,6 +67,8 @@ CREATE TABLE `thread` (
   `modOnly`         boolean NOT NULL DEFAULT 0,
   `bulleted`        boolean DEFAULT 0,
   `status`          int(8) NOT NULL,
+  `viewCount`       int(8) NOT NULL DEFAULT 0,
+  `threadPic`       VARCHAR(255) NOT NULL,
   PRIMARY KEY (threadId)
 ) ENGINE=INNODB DEFAULT CHARSET=latin1;
 

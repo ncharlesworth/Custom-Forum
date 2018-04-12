@@ -30,6 +30,15 @@ include "Temp-Client-Stuff/header.php";
         mysqli_autocommit($connection, FALSE);
 
         $threadTopic = mysqli_real_escape_string($connection, $_POST['threadTopic']);
+
+        $threadPic = "images/default.png";
+        $getPicSQL = "SELECT topicPic FROM topic WHERE topicId=" . $threadTopic;
+        $getPicQuery = mysqli_query($connection, $getPicSQL);
+        if(mysqli_num_rows($getPicQuery) >0){
+          $getPic = mysqli_fetch_assoc($getPicQuery);
+          $threadPic = $getPic['topicPic'];
+        }
+
         $threadDescription = mysqli_real_escape_string($connection, $_POST['threadDescription']);
         $threadTitle = mysqli_real_escape_string($connection, $_POST['threadTitle']);
         $postContent = mysqli_real_escape_string($connection, $_POST['postContent']);
@@ -50,13 +59,13 @@ include "Temp-Client-Stuff/header.php";
             $isTopModOnly = mysqli_fetch_assoc(mysqli_query($connection, $isTopModOnlySQL));
 
             if(empty($_POST['modOnly']) && $isTopModOnly['modOnly'] ==0){
-              $threadSQL = "INSERT INTO thread (threadDescription, threadDate, threadTopic, threadTitle, threadBy, status)
-              VALUES ('$threadDescription','$time','$threadTopic', '$threadTitle', '$tempUser', '$statusId2')";
+              $threadSQL = "INSERT INTO thread (threadDescription, threadDate, threadTopic, threadTitle, threadBy, status, threadPic)
+              VALUES ('$threadDescription','$time','$threadTopic', '$threadTitle', '$tempUser', '$statusId2', '$threadPic')";
             }
             else{
               $modOnly = 1;
-              $threadSQL = "INSERT INTO thread (threadDescription, threadDate, threadTopic, threadTitle, threadBy, modOnly, status)
-              VALUES ('$threadDescription','$time','$threadTopic', '$threadTitle', '$tempUser', '$modOnly', '$statusId2')";
+              $threadSQL = "INSERT INTO thread (threadDescription, threadDate, threadTopic, threadTitle, threadBy, modOnly, status, threadPic)
+              VALUES ('$threadDescription','$time','$threadTopic', '$threadTitle', '$tempUser', '$modOnly', '$statusId2', '$threadPic')";
             }
 
             if(mysqli_query($connection, $threadSQL)){
@@ -78,10 +87,9 @@ include "Temp-Client-Stuff/header.php";
 
 
                mysqli_commit($connection);
-              /*  echo "Your Thread has been Created!";
+                /*echo "Your Thread has been Created!";
                 echo "<a href='display_thread.php?thrid=" . $threadId . "'> Click here to see your thread.</a>";*/
-
-              header("Location: http://localhost/project/src/server/display_Thread.php?thrid=" . mysqli_real_escape_string($connection, $threadId));
+                header("Location: display_thread.php?thrid=".$threadId);
              }
              else{
                mysqli_rollback($connection);

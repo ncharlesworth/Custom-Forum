@@ -5,6 +5,7 @@ include "Temp-Client-Stuff/header.php";
 
 <?php
 include "connect.php"; //$connection
+include "views.php";
 
 $sql = "SELECT * FROM thread WHERE `threadId`='" . mysqli_real_escape_string($connection, $_GET['thrid']) . "'";
 
@@ -15,13 +16,16 @@ if($idResult){
 
   $curThreadId = mysqli_fetch_assoc($idResult);
 
-  curThreadNav($connection, $curThreadId);
-
-
   if($curThreadId['modOnly'] == true && $_SESSION['userRank'] > 1 ){
+    curTopicNav($connection, $curThreadId);
     echo "You do not have permission to view this page";
   }
   else{
+
+    curThreadNav($connection, $curThreadId);
+
+    increaseViews($connection, $curThreadId['threadId'], $curThreadId['viewCount']);
+
     if($curThreadId['modOnly'] == true){
      echo "Viewing Moderated Thread";
     }

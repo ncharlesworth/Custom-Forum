@@ -110,7 +110,7 @@ th{
   font-size:8pt;
   color:
 }
-.unread{
+.topicPicture{
   width:2em;
 }
 .lPost{
@@ -247,6 +247,10 @@ footer p{
 #login fieldset{
   border:none;
   margin-right:40%;
+}
+#loggedUserPic{
+  width:64px;
+  height:64px;
 }
 
 /*Thread Creation is Here*/

@@ -4,6 +4,7 @@ include "Temp-Client-Stuff/header.php";
 
 <?php
   include "connect.php";
+  include "views.php";
 
 
   if(empty($_GET['topid'])){
@@ -51,20 +52,21 @@ include "Temp-Client-Stuff/header.php";
          continue;
        }
 
-
       $threadSQL = "SELECT * FROM thread WHERE `threadTopic`='". $row['topicId'] ."' ORDER BY `threadId` DESC";
       $threadResult = mysqli_fetch_assoc(mysqli_query($connection, $threadSQL));
 
-      $postidSQL = "SELECT * FROM posts WHERE `postThread`='" . $threadResult['threadId'] . "' ORDER BY `postId` desc";
+      $postidSQL = "SELECT * FROM posts WHERE `postThread`='" . $threadResult['threadId'] . "' ORDER BY `postId` DESC";
       $postResult = mysqli_fetch_assoc(mysqli_query($connection, $postidSQL));
 
       echo "<tr>";
-      echo "<td rowspan='2' class='unread'><img src = 'images/unread.png' alt='Unread Messages'></td>";
+      echo "<td rowspan='2' class='topicPicture'><img src = '".$row['topicPic']."' alt='Topic Picture'></td>";
       echo "<td class='tableTopic'> <h3><a href='display_Topic.php?topid=" . $row['topicId'] . "'>" . $row['topicName'] . "</a></h3></td>";
 
       echo "<td rowspan='2' class='lPost'>";
       if($threadResult != null){
-        echo "<a href='display_thread.php?thrid=" . $postResult['postThread'] . "#" . $postResult['postId'] . "'>Last Post</a></td>";
+        echo "<a href='display_thread.php?thrid=" . $postResult['postThread'] . "#" . $postResult['postId'] . "'>Last Post</a>";
+        $tempViews = getViews($connection, $threadResult['threadId']);
+        echo "<br><p> Views: " . $tempViews['viewCount'] . "</p></td>";
       }
       else{
         echo "No Posts!";
@@ -105,11 +107,11 @@ include "Temp-Client-Stuff/header.php";
             $bulAnnRowlPostSQL = "SELECT * FROM posts WHERE postThread=".$bulAnnRow['threadId'];
             $bulAnnRowlPost = mysqli_fetch_assoc(mysqli_query($connection, $bulAnnRowlPostSQL));
 
-            echo "<tr><td rowspan='2' class='unread'><img src='images/unread.png' alt='Unread Messages'></td>";
-            echo "<td class='tableTopic'><h3><a href='display_Thread.php?thrid=".$bulAnnRow['threadId']
+            echo "<tr><td rowspan='2' class='topicPicture'><img src='".$bulAnnRow['threadPic']."' alt='Thread Status'></td>";
+            echo "<td class='tableTopic'><h3><a href='display_thread.php?thrid=".$bulAnnRow['threadId']
                   ."'>".$bulAnnRow['threadTitle']."</a></h3></td>
-                  <td rowspan='2' class='lPost'> <a href='display_Thread?thrid=".$bulAnnRow['threadId'].
-                  "#". $bulAnnRowlPost['postId'] ."'>Last Post</a></td>
+                  <td rowspan='2' class='lPost'> <a href='display_thread?thrid=".$bulAnnRow['threadId'].
+                  "#". $bulAnnRowlPost['postId'] ."'>Last Post</a> <br><p>Views: ".$bulAnnRow['viewCount']."</p></td>
                   </tr>";
             echo "<tr><td class='topicDescription'>".$bulAnnRow['threadDescription']."</td></tr>";
           }
@@ -125,11 +127,11 @@ include "Temp-Client-Stuff/header.php";
             $bulThrRowlPost = mysqli_fetch_assoc(mysqli_query($connection, $bulThrRowlPostSQL));
 
 
-            echo "<tr><td rowspan='2' class='unread'><img src='images/unread.png' alt='Unread Messages'></td>";
-            echo "<td class='tableTopic'><h3><a href='display_Thread.php?thrid=".$bulThrRow['threadId']
+            echo "<tr><td rowspan='2' class='topicPicture'><img src='".$bulThrRow['threadPic']."' alt='Thread Status'></td>";
+            echo "<td class='tableTopic'><h3><a href='display_thread.php?thrid=".$bulThrRow['threadId']
                   ."'>".$bulThrRow['threadTitle']."</a></h3></td>
-                  <td rowspan='2' class='lPost'> <a href='display_Thread?thrid=".$bulThrRow['threadId'].
-                  "#". $bulThrRowlPost['postId'] ."'>Last Post</a></td>
+                  <td rowspan='2' class='lPost'> <a href='display_thread?thrid=".$bulThrRow['threadId'].
+                  "#". $bulThrRowlPost['postId'] ."'>Last Post</a><br><p>Views: ".$bulThrRow['viewCount']."</p></td>
                   </tr>";
             echo "<tr><td class='topicDescription'>".$bulThrRow['threadDescription']."</td></tr>";
           }
@@ -162,12 +164,12 @@ include "Temp-Client-Stuff/header.php";
 
 
            echo "<tr>
-                  <td rowspan='2' class='unread'><img src = 'images/unread.png'
-                   alt='Unread Messages'></td>";
+                  <td rowspan='2' class='topicPicture'><img src = '".$row['threadPic']."'
+                   alt='Thread Status'></td>";
            echo "<td class='tableTopic'> <h3> <a href='display_thread.php?thrid=" .
                    $row['threadId'] . "'>" . $row['threadTitle'] . " </a></h3></td>";
            echo "<td rowspan='2' class='lPost'> <a href=display_thread.php?thrid="
-                 . $row['threadId'] . "#" . $curPost['postId']  . ">Last Post</a></td>
+                 . $row['threadId'] . "#" . $curPost['postId']  . ">Last Post</a><br><p>Views: ".$row['viewCount']."</p></td>
                  </tr>";
            echo "<tr>
                   <td class='topicDescription'>" . $row['threadDescription'] ."</td>

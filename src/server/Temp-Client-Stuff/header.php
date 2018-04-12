@@ -1,6 +1,7 @@
 
 <?php
 include "sessionInfo.php";
+ob_start();
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +51,35 @@ include "sessionInfo.php";
           if($_SESSION['loggedIn']){
             echo '<div>';
               echo '<figure>';
-                echo "<a href=user.php?id=" . $_SESSION['userId'] . "><img src = 'images/user.png' alt='Go to your User Page'></a>";
+
+              include "Temp-Client-Stuff/header_Connect.php";
+
+              $headerUserImageSQL = "SELECT * FROM userimages WHERE userId=".$_SESSION['userId'];
+              $headerUserImage = mysqli_query($headerConnection, $headerUserImageSQL);
+              if($headerUserImage){
+                if(mysqli_num_rows($headerUserImage) >0){
+                  $imgSQL = "SELECT contentType, userPicture FROM userimages where userID=?";
+                  $stmt = mysqli_stmt_init($headerConnection);
+                  mysqli_stmt_prepare($stmt, $imgSQL);
+                  mysqli_stmt_bind_param($stmt, "i", $_SESSION['userId']);
+                  $result = mysqli_stmt_execute($stmt) or die(mysqli_stmt_error($stmt));
+                  mysqli_stmt_bind_result($stmt, $type, $image);
+                  mysqli_stmt_fetch($stmt);
+                  mysqli_stmt_close($stmt);
+                  echo "<a href=user.php?id=" . $_SESSION['userId'] . ">";
+                  echo "<img id='loggedUserPic' src='data:image/" . $type
+                  . ";base64," . base64_encode($image)."' alt='Go to your User Page'>";
+
+                  echo "</a>";
+
+                }
+                else{
+                  echo "<a id='loggedUserPic' href=user.php?id=" . $_SESSION['userId'] . "><img src = 'images/user.png' alt='Go to your User Page'></a>";
+                }
+              }
+              else{
+                echo "<a id='loggedUserPic' href=user.php?id=" . $_SESSION['userId'] . "><img src = 'images/user.png' alt='Go to your User Page'></a>";
+              }
               echo '</figure>';
             echo '</div>';
             echo '<div>';
